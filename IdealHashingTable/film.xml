@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<videoStore>
+    <genres>
+        <genre>
+            <name>Comedy</name>
+            <films>
+                <film>
+                    <title>The Wolf of Wall Street</title>
+                    <year>2013</year>
+                    <rating>8.2</rating>
+                </film>
+                <film>
+                    <title>Deadpool</title>
+                    <year>2016</year>
+                    <rating>8.0</rating>
+                </film>
+                <film>
+                    <title>Back to the Future</title>
+                    <year>1985</year>
+                    <rating>8.5</rating>
+                </film>
+                <film>
+                    <title>The Truman Show</title>
+                    <year>1998</year>
+                    <rating>8.1</rating>
+                </film>
+                <film>
+                    <title>Snatch</title>
+                    <year>2000</year>
+                    <rating>8.3</rating>
+                </film>
+                <film>
+                    <title>The Hangover</title>
+                    <year>2009</year>
+                    <rating>7.7</rating>
+                </film>
+                <film>
+                    <title>The Big Lebowski</title>
+                    <year>1998</year>
+                    <rating>8.2</rating>
+                </film>
+                <film>
+                    <title>The Grand Budapest Hotel</title>
+                    <year>2014</year>
+                    <rating>8.1</rating>
+                </film>
+                <film>
+                    <title>Ted</title>
+                    <year>2012</year>
+                    <rating>7.0</rating>
+                </film>
+                <film>
+                    <title>Groundhog Day</title>
+                    <year>1993</year>
+                    <rating>8.0</rating>
+                </film>
+                <film>
+                    <title>Kick-Ass</title>
+                    <year>2010</year>
+                    <rating>7.6</rating>
+                </film>
+                <film>
+                    <title>Lock, Stock and Two Smoking Barrels</title>
+                    <year>1998</year>
+                    <rating>8.2</rating>
+                </film>
+                <film>
+                    <title>21 Jump Street</title>
+                    <year>2012</year>
+                    <rating>7.2</rating>
+                </film>
+                <film>
+                    <title>Men in Black</title>
+                    <year>1997</year>
+                    <rating>7.3</rating>
+                </film>
+                <film>
+                    <title>Home Alone</title>
+                    <year>1990</year>
+                    <rating>7.5</rating>
+                </film>
+            </films>
+        </genre>
+        <genre>
+            <name>Sci-Fi</name>
+            <films>
+                <film>
+                    <title>Inception</title>
+                    <year>2010</year>
+                    <rating>8.8</rating>
+                </film>
+                <film>
+                    <title>The Matrix</title>
+                    <year>1999</year>
+                    <rating>8.7</rating>
+                </film>
+                <film>
+                    <title>Interstellar</title>
+                    <year>2014</year>
+                    <rating>8.6</rating>
+                </film>
+                <film>
+                    <title>The Avengers</title>
+                    <year>2012</year>
+                    <rating>8.1</rating>
+                </film>
+                <film>
+                    <title>Star Wars</title>
+                    <year>1977</year>
+                    <rating>8.6</rating>
+                </film>
+                <film>
+                    <title>Avatar</title>
+                    <year>2009</year>
+                    <rating>7.8</rating>
+                </film>
+                <film>
+                    <title>Terminator 2: Judgment Day</title>
+                    <year>1991</year>
+                    <rating>8.5</rating>
+                </film>
+                <film>
+                    <title>Guardians of the Galaxy</title>
+                    <year>2014</year>
+                    <rating>8.1</rating>
+                </film>
+                <film>
+                    <title>Iron Man</title>
+                    <year>2008</year>
+                    <rating>7.9</rating>
+                </film>
+                <film>
+                    <title>The Hunger Games</title>
+                    <year>2012</year>
+                    <rating>7.2</rating>
+                </film>
+                <film>
+                    <title>Jurassic Park</title>
+                    <year>1993</year>
+                    <rating>8.1</rating>
+                </film>
+                <film>
+                    <title>Mad Max: Fury Road</title>
+                    <year>2015</year>
+                    <rating>8.1</rating>
+                </film>
+                <film>
+                    <title>Alien</title>
+                    <year>1979</year>
+                    <rating>8.5</rating>
+                </film>
+                <film>
+                    <title>Thor</title>
+                    <year>2011</year>
+                    <rating>7.0</rating>
+                </film>
+                <film>
+                    <title>The Martian</title>
+                    <year>2015</year>
+                    <rating>8.0</rating>
+                </film>
+                <film>
+                    <title>Spider-Man</title>
+                    <year>2002</year>
+                    <rating>7.3</rating>
+                </film>
+                <film>
+                    <title>District 9</title>
+                    <year>2009</year>
+                    <rating>8.0</rating>
+                </film>
+                <film>
+                    <title>Blade Runner</title>
+                    <year>1982</year>
+                    <rating>8.2</rating>
+                </film>
+                <film>
+                    <title>Star Trek</title>
+                    <year>2009</year>
+                    <rating>8.0</rating>
+                </film>
+            </films>
+        </genre>
+        <genre>
+            <name>Horror</name>
+            <films>
+                <film>
+                    <title>The Shining</title>
+                    <year>1980</year>
+                    <rating>8.4</rating>
+                </film>
+                <film>
+                    <title>Psycho</title>
+                    <year>1960</year>
+                    <rating>8.5</rating>
+                </film>
+                <film>
+                    <title>The Conjuring</title>
+                    <year>2013</year>
+                    <rating>7.5</rating>
+                </film>
+                <film>
+                    <title>Saw</title>
+                    <year>2004</year>
+                    <rating>7.6</rating>
+                </film>
+                <film>
+                    <title>28 Days Later...</title>
+                    <year>2002</year>
+                    <rating>7.6</rating>
+                </film>
+                <film>
+                    <title>The Cabin in the Woods</title>
+                    <year>2012</year>
+                    <rating>7.0</rating>
+                </film>
+                <film>
+                    <title>The Exorcist</title>
+                    <year>1973</year>
+                    <rating>8.0</rating>
+                </film>
+                <film>
+                    <title>The Thing</title>
+                    <year>1982</year>
+                    <rating>8.1</rating>
+                </film>
+                <film>
+                    <title>The Others</title>
+                    <year>2001</year>
+                    <rating>7.6</rating>
+                </film>
+                <film>
+                    <title>Sleepy Hollow</title>
+                    <year>1999</year>
+                    <rating>7.4</rating>
+                </film>
+                <film>
+                    <title>Get Out</title>
+                    <year>2017</year>
+                    <rating>7.7</rating>
+                </film>
+                <film>
+                    <title>The Ring</title>
+                    <year>2002</year>
+                    <rating>7.1</rating>
+                </film>
+                <film>
+                    <title>It</title>
+                    <year>2017</year>
+                    <rating>7.5</rating>
+                </film>
+                <film>
+                    <title>The Mist</title>
+                    <year>2007</year>
+                    <rating>7.2</rating>
+                </film>
+                <film>
+                    <title>Scream</title>
+                    <year>1996</year>
+                    <rating>7.2</rating>
+                </film>
+                <film>
+                    <title>Insidious</title>
+                    <year>2010</year>
+                    <rating>6.8</rating>
+                </film>
+            </films>
+        </genre>
+    </genres>
+</videoStore>

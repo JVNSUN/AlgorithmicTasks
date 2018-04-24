@@ -1,0 +1,26 @@
+package com.jansun.dataService;
+
+import com.jansun.domain.VideoStore;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import java.io.File;
+import java.io.IOException;
+
+public class XMLDataService implements DataService {
+    public VideoStore loadData(String resource) {
+
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(VideoStore.class);
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            File xmlFile = new File(resource);
+            return (VideoStore) unmarshaller.unmarshal(xmlFile);
+        }
+        catch (JAXBException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+}
