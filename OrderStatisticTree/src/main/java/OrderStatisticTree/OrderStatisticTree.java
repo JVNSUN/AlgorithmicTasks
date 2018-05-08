@@ -7,8 +7,7 @@ public class OrderStatisticTree<T extends Comparable<T>> {
     private OSTNode<T> root;
 
     public OrderStatisticTree() {
-        nullNode = new OSTNode<T>(null);
-        root = nullNode;
+        root = OSTNode.nullNode;
     }
     public void clear() {
         root = nullNode;

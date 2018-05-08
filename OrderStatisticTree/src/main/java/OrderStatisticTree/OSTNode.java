@@ -9,13 +9,20 @@ class OSTNode<T extends Comparable<T>> {
 
     static OSTNode nullNode;
 
+    static {
+        nullNode = new OSTNode(null);
+        nullNode.isRed = false;
+        nullNode.left = null;
+        nullNode.right = null;
+    }
+
     boolean isEmpty() {
         return (this == nullNode);
     }
 
     public OSTNode(T x) { // constructor
         data = x;
-        isRed = false;
+        isRed = true;
         left = nullNode;
         right = nullNode;
         size = 1;
