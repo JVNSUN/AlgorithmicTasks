@@ -1,14 +1,13 @@
-import CLI.*;
-import tree.RedBlackTree;
+import OrderStatisticTree.OrderStatisticTree;
 
 public class Main {
     public static void main(String[] args) {
         //Menu.start();
-        RedBlackTree redBlackTree = new RedBlackTree();
+        OrderStatisticTree<Integer> redBlackTree = new OrderStatisticTree<Integer>();
         redBlackTree.insert(23);
         redBlackTree.insert(41);
-        redBlackTree.remove(23);
-        redBlackTree.checkRedBlack();
-        System.out.println(redBlackTree.size());
+        redBlackTree.insert(42);
+        redBlackTree.insert(12);
+        redBlackTree.print();
     }
 }

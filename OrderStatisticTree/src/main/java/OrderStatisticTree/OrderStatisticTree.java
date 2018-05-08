@@ -1,114 +1,109 @@
-package tree;
+package OrderStatisticTree;
 
-public class RedBlackTree {
+import static OrderStatisticTree.OSTNode.nullNode;
 
-    private TreeNode Root;
+public class OrderStatisticTree<T extends Comparable<T>> {
 
-    public TreeNode getRoot() {
-        return Root;
-    }
+    private OSTNode<T> root;
 
-    // Constructs a new empty red-black tree.
-    public RedBlackTree() {
-        Root = TreeNode.nullnode;
+    public OrderStatisticTree() {
+        nullNode = new OSTNode<T>(null);
+        root = nullNode;
     }
     public void clear() {
-        Root = TreeNode.nullnode;
+        root = nullNode;
     }
 
     public boolean isEmpty() {
-        return Root.isEmpty();
+        return root.isEmpty();
     }
 
     public int size() {
-        return Root.size();
+        return root.size();
     }
 
-    public TreeNode find(int key) {
-        if (Root.isEmpty()) return Root;
-        return Root.find(key);
+    public OSTNode<T> find(T x) {
+        if (root.isEmpty()) return root;
+        return root.find(x);
     }
 
-    public void checkRedBlack() {
-        if (Root.isRed)
-            System.out.println("The root is red");
-        Root.bheight();
-    }
+    public void insert(T x) { // call recursive insert
+        OSTNode<T> nnd = new OSTNode<T>(x); // make new node
 
-    public void insert(int id) { // call recursive insert
-        TreeNode nnd = new TreeNode(id); // make new node
-
-        if (Root.isEmpty()) Root = nnd;
-        else if (id < Root.iData) {
-            if (Root.left.isEmpty())
-                Root.left = nnd;
-            else if (insert(nnd, Root.left, Root)) {
-                // red-red violation exists at Root.left and its children
-                if (Root.right.isRed) { // red uncle case:
-                    Root.right.isRed = Root.left.isRed = false;
+        if (root.isEmpty()) root = nnd;
+        else if (x.compareTo(root.data) < 0) {
+            if (root.left.isEmpty()) {
+                root.left = nnd;
+                root.size++;
+            }
+            else if (insert(nnd, root.left, root)) {
+                // red-red violation exists at root.left and its children
+                if (root.right.isRed) { // red uncle case:
+                    root.right.isRed = root.left.isRed = false;
                 } else { // black uncle case:			    	   
-                    Root.isRed = true;
-                    if (nnd.iData < Root.left.iData) {
-                        Root = Root.rotateToRight();
+                    root.isRed = true;
+                    if (nnd.data.compareTo(root.left.data) < 0) {
+                        root = root.rotateToRight();
                     } else {
-                        Root = Root.doubleRotateToRight();
+                        root = root.doubleRotateToRight();
                     }
                 } // else
             }
-        } else if (Root.right.isEmpty()) {
-            Root.right = nnd;
-        } else if (insert(nnd, Root.right, Root)) {
-            // red-red violation exists at Root.right and its children
-            if (Root.left.isRed) { // red uncle case:
-                Root.right.isRed = Root.left.isRed = false;
+        } else if (root.right.isEmpty()) {
+            root.right = nnd;
+            root.size++;
+        } else if (insert(nnd, root.right, root)) {
+            // red-red violation exists at root.right and its children
+            if (root.left.isRed) { // red uncle case:
+                root.right.isRed = root.left.isRed = false;
             } else { // black uncle case:		    	   
-                Root.isRed = true;
-                if (nnd.iData >= Root.right.iData) {
-                    Root = Root.rotateToLeft();
+                root.isRed = true;
+                if (nnd.data.compareTo(root.right.data) >= 0) {
+                    root = root.rotateToLeft();
                 } else {
-                    Root = Root.doubleRotateToLeft();
+                    root = root.doubleRotateToLeft();
                 }
             } // else
         }
-        Root.isRed = false;
+        root.isRed = false;
     } // end insert()
 
-
-
-    public void remove(int id) {
-        if (Root.isEmpty()) return;
-        if (id < Root.iData) {
-            if (remove(id, Root.left, Root, TreeNode.nullnode)) {
-                Root.isRed = false;
+    public void remove(T x) {
+        if (root.isEmpty()) return;
+        if (x.compareTo(root.data) < 0) {
+            if (remove(x, root.left, root, nullNode)) {
+                root.isRed = false;
             }
-        } else if (id > Root.iData) {
-            if (remove(id, Root.right, Root, TreeNode.nullnode)) {
-                Root.isRed = false;
+        } else if (x.compareTo(root.data) > 0) {
+            if (remove(x, root.right, root, nullNode)) {
+                root.isRed = false;
             }
-        } else if (Root.left.isEmpty()) {
-            Root = Root.right;
-            Root.isRed = false;
-        } else if (Root.right.isEmpty()) {
-            Root = Root.left;
-            Root.isRed = false;
+        } else if (root.left.isEmpty()) {
+            root = root.right;
+            root.isRed = false;
+        } else if (root.right.isEmpty()) {
+            root = root.left;
+            root.isRed = false;
         } else { // Two children
-            int maxValueInLeft = Root.left.findMax().iData;
-            Root.iData = maxValueInLeft;
-            if (remove(maxValueInLeft, Root.left, Root, TreeNode.nullnode)) {
-                Root.isRed = false;
+            T maxValueInLeft = root.left.findMax().data;
+            root.data = maxValueInLeft;
+            if (remove(maxValueInLeft, root.left, root, nullNode)) {
+                root.isRed = false;
             }
         }
     }
 
-    /* *************************************************** *
-     *  PRIVATE METHODS                                    *
-     * *************************************************** */
+    public void print() {
+        this.root.print();
+    }
 
-    /* Inserts a node into tree and returns a boolean */
-    private boolean insert(TreeNode nnd, TreeNode t, TreeNode par) {
+
+
+    private boolean insert(OSTNode<T> nnd, OSTNode<T> t, OSTNode<T> par) {
         // return true iff t is red and t has a red child
-
-        if (nnd.iData < t.iData) {
+        if (par != OSTNode.nullNode)
+            par.size++;
+        if (nnd.data.compareTo(t.data) < 0) {
             if (t.left.isEmpty()) {
                 t.left = nnd; //attach new node as leaf
             } else if (insert(nnd, t.left, t)) {
@@ -117,16 +112,17 @@ public class RedBlackTree {
                     t.right.isRed = t.left.isRed = false;
                     t.isRed = true;
                 } else { // black uncle case:
-                    TreeNode nt;
+                    OSTNode<T> nt;
 
-                    if (nnd.iData < t.left.iData) {
+                    if (nnd.data.compareTo(t.left.data) < 0) {
                         nt = t.rotateToRight();
                     } else {
                         nt = t.doubleRotateToRight();
                     }
                     t.isRed = true;
                     nt.isRed = false;
-                    if (nt.iData < par.iData) par.left = nt;
+                    if (nt.data.compareTo(par.data) < 0)
+                        par.left = nt;
                     else par.right = nt;
                 } //if
             }
@@ -141,16 +137,16 @@ public class RedBlackTree {
                     t.right.isRed = t.left.isRed = false;
                     t.isRed = true;
                 } else { // black uncle case:
-                    TreeNode nt;
+                    OSTNode<T> nt;
 
-                    if (nnd.iData >= t.right.iData) {
+                    if (nnd.data.compareTo(t.right.data) >= 0) {
                         nt = t.rotateToLeft();
                     } else {
                         nt = t.doubleRotateToLeft();
                     }
                     t.isRed = true;
                     nt.isRed = false;
-                    if (nt.iData < par.iData) par.left = nt;
+                    if (nt.data.compareTo(par.data) < 0) par.left = nt;
                     else par.right = nt;
                 } // else
             }
@@ -159,14 +155,14 @@ public class RedBlackTree {
         } // else
     } // end insert
     
-    private boolean remove(int id, TreeNode t, TreeNode par, TreeNode gpar) {
+    private boolean remove(T x, OSTNode<T> t, OSTNode<T> par, OSTNode<T> gpar) {
         if (t.isEmpty()) return false;
-        if (id < t.iData) {
-            if (remove(id, t.left, t, par)) {
+        if (x.compareTo(t.data) < 0) {
+            if (remove(x, t.left, t, par)) {
                 return fixRBDelete(t, par, gpar);
             }
-        } else if (id > t.iData) {
-            if (remove(id, t.right, t, par)) {
+        } else if (x.compareTo(t.data) > 0) {
+            if (remove(x, t.right, t, par)) {
                 return fixRBDelete(t, par, gpar);
             }
         } else if (t.left.isEmpty()) {
@@ -196,8 +192,8 @@ public class RedBlackTree {
                 return fixRBDelete(t.left, par, gpar);
             }
         } else {
-            int maxValueInLeft = t.left.findMax().iData;
-            t.iData = maxValueInLeft;
+            T maxValueInLeft = t.left.findMax().data;
+            t.data = maxValueInLeft;
             if (remove(maxValueInLeft, t.left, t, par)) {
                 return fixRBDelete(t, par, gpar);
             }
@@ -205,7 +201,7 @@ public class RedBlackTree {
         return false;
     }
 
-    private boolean fixRBDelete(TreeNode t, TreeNode par, TreeNode gpar) {
+    private boolean fixRBDelete(OSTNode<T> t, OSTNode<T> par, OSTNode<T> gpar) {
         if (t.isRed) {
             t.isRed = false;
             return false;
@@ -221,8 +217,8 @@ public class RedBlackTree {
                     gpar.right = par.rotateToLeft();
                     gpar = gpar.left;
                 } else {
-                    Root = par.rotateToLeft();
-                    gpar = Root;
+                    root = par.rotateToLeft();
+                    gpar = root;
                 }
             }
             if (!par.right.left.isRed && !par.right.right.isRed) {
@@ -247,8 +243,8 @@ public class RedBlackTree {
                 else if (par == gpar.right)
                     gpar.right = par.rotateToLeft();
                 else
-                    Root = par.rotateToLeft();
-                Root.isRed = false;
+                    root = par.rotateToLeft();
+                root.isRed = false;
                 return false;
             }
         } else {
@@ -262,8 +258,8 @@ public class RedBlackTree {
                     gpar.right = par.rotateToRight();
                     gpar = gpar.right;
                 } else {
-                    Root = par.rotateToRight();
-                    gpar = Root;
+                    root = par.rotateToRight();
+                    gpar = root;
                 }
             }
             if (!par.left.left.isRed && !par.left.right.isRed) {
@@ -288,12 +284,11 @@ public class RedBlackTree {
                 else if (par == gpar.right)
                     gpar.right = par.rotateToRight();
                 else
-                    Root = par.rotateToRight();
-                Root.isRed = false;
+                    root = par.rotateToRight();
+                root.isRed = false;
                 return false;
             }
         }
         return false;
     }
-    
 }
