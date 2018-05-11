@@ -1,17 +1,13 @@
 package domain;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlTransient;
+import OrderStatisticTree.OrderStatisticTree;
+import OrderStatisticTree.OSTNode;
 import java.util.LinkedList;
 
 public class Genre {
     private String name;
 
-    private LinkedList<Film> films;
-
-    //@XmlTransient
-    //SplayTree<Film> filmsSplayTree;
+    private OrderStatisticTree<Film> tree = new OrderStatisticTree<Film>();
 
     public String getName() {
         return name;
@@ -21,42 +17,40 @@ public class Genre {
         this.name = name;
     }
 
-    @XmlElementWrapper(name = "films")
-    @XmlElement(name = "film")
-    public LinkedList<Film> getFilms() {
-        return films;
-    }
-
-    public void setFilms(LinkedList<Film> films) {
-        this.films = films;
-    }
-
-    /*public Film getFilm(String title) {
-        SplayTreeNode<Film> node = filmsSplayTree.search(Film.getFilmWithTitle(title));
-        if (node == null)
+    public OSTNode<Film> getFilmNode(String title) {
+        OSTNode<Film> node = tree.find(Film.getFilmWithTitle(title));
+        if (node == null || node.isEmpty())
             return null;
         else
-            return node.getKey();
+            return node;
 
     }
 
     public void addFilm(Film film) {
-        filmsSplayTree.insert(film);
-    }
-
-    public void fullfillSplayTree() {
-        filmsSplayTree = new SplayTree<Film>();
-        Film film;
-        while ((film = films.poll()) != null)
-            filmsSplayTree.insert(film);
-
+        tree.insert(film);
     }
 
     public void delete(Film film) {
-        this.filmsSplayTree.delete(film);
+        tree.remove(film);
+    }
+
+    public Film osSelect(int i) {
+        return tree.osSelect(i);
+    }
+
+    public int osRank(OSTNode<Film> x) {
+        return tree.osRank(x);
     }
 
     public void printFilms() {
-        this.filmsSplayTree.print();
-    }*/
+        tree.print();
+    }
+
+    public int size() {
+        return this.tree.size();
+    }
+
+    public void printTreeToFile() {
+        this.tree.printTreeToFile();
+    }
 }

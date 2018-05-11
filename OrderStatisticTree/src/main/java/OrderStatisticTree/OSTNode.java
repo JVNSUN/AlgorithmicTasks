@@ -1,6 +1,6 @@
 package OrderStatisticTree;
 
-class OSTNode<T extends Comparable<T>> {
+public class OSTNode<T extends Comparable<T>> {
     T data;
     boolean isRed;
     OSTNode<T> left;
@@ -14,9 +14,10 @@ class OSTNode<T extends Comparable<T>> {
         nullNode.isRed = false;
         nullNode.left = null;
         nullNode.right = null;
+        nullNode.size = 0;
     }
 
-    boolean isEmpty() {
+    public boolean isEmpty() {
         return (this == nullNode);
     }
 
@@ -26,11 +27,6 @@ class OSTNode<T extends Comparable<T>> {
         left = nullNode;
         right = nullNode;
         size = 1;
-    }
-
-    public int size() {
-        if (this == nullNode) return 0;
-        else return 1 + left.size() + right.size();
     }
 
     public OSTNode<T> find(T x) { // non-RECURSIVE find node with given key
@@ -44,37 +40,28 @@ class OSTNode<T extends Comparable<T>> {
         }
     } // end find()
 
-    public OSTNode<T> insert(T x) {
-        if (this == nullNode) return new OSTNode<T>(x);
-        if (x.compareTo(this.data) < 0) {
-            this.left = this.left.insert(x);
-        } else { // branch right
-            this.right = this.right.insert(x);
-        }
-        return this;
-    } // end insert
+    public String colorChar() {
+        return (this.isRed ? "r" : "b" );
+    }
 
-    public OSTNode<T> remove(T x) {
-        if (this == nullNode) return nullNode; // Item not found; do nothing
-        if (x.compareTo(this.data) < 0) {
-            this.left = this.left.remove(x);
-        } else if (x.compareTo(this.data) > 0) {
-            this.right = this.right.remove(x);
-        } else if (this.left == nullNode) {
-            return this.right;
-        } else if (this.right == nullNode) {
-            return this.left;
-        } else { // Two children
-            this.data = (this.left).deleteMax(this).data;
-        }
-        return this;
+    String label() {
+        if (this == nullNode)
+            return "nil";
+        return this.size + this.colorChar() + " " + this.trimTitle();
+    }
+
+    private String trimTitle() {
+        if (this.data.toString().length() > 10)
+                return this.data.toString().substring(0, 10);
+
+        return this.data.toString();
     }
 
     void print() {
         if (this.left != nullNode) {
             this.left.print();
         }
-        System.out.println(this.data + " " + this.size + this.isRed);
+        System.out.println(this.data);
         if (this.right != nullNode) {
             this.right.print();
         }
@@ -113,13 +100,4 @@ class OSTNode<T extends Comparable<T>> {
         if (right != nullNode) return right.findMax();
         return this;
     }
-
-    public OSTNode<T> deleteMax(OSTNode<T> par) {
-        // delete the link from parent par and return the node with maximum key
-        if (right != nullNode) return right.deleteMax(this);
-        if (par.right == this) par.right = left;
-        else par.left = left;
-        return this;
-    }
-
 }

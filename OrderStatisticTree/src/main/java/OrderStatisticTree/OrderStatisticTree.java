@@ -1,5 +1,10 @@
 package OrderStatisticTree;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static OrderStatisticTree.OSTNode.nullNode;
 
 public class OrderStatisticTree<T extends Comparable<T>> {
@@ -9,16 +14,9 @@ public class OrderStatisticTree<T extends Comparable<T>> {
     public OrderStatisticTree() {
         root = OSTNode.nullNode;
     }
-    public void clear() {
-        root = nullNode;
-    }
-
-    public boolean isEmpty() {
-        return root.isEmpty();
-    }
 
     public int size() {
-        return root.size();
+        return this.root.size;
     }
 
     public OSTNode<T> find(T x) {
@@ -27,7 +25,7 @@ public class OrderStatisticTree<T extends Comparable<T>> {
     }
 
     public void insert(T x) { // call recursive insert
-        OSTNode<T> nnd = new OSTNode<T>(x); // make new node
+        OSTNode<T> nnd = new OSTNode<>(x); // make new node
 
         if (root.isEmpty()) root = nnd;
         else if (x.compareTo(root.data) < 0) {
@@ -80,9 +78,11 @@ public class OrderStatisticTree<T extends Comparable<T>> {
         } else if (root.left.isEmpty()) {
             root = root.right;
             root.isRed = false;
+            root.size--;
         } else if (root.right.isEmpty()) {
             root = root.left;
             root.isRed = false;
+            root.size--;
         } else { // Two children
             T maxValueInLeft = root.left.findMax().data;
             root.data = maxValueInLeft;
@@ -96,7 +96,67 @@ public class OrderStatisticTree<T extends Comparable<T>> {
         this.root.print();
     }
 
+    public T osSelect(int i) {
+        return osSelect(root, i);
+    }
 
+    public int osRank(OSTNode<T> x) {
+        return x.left.size + 1 + osRank(x, root);
+    }
+
+    private int osRank(OSTNode<T> x, OSTNode<T> root) {
+        int rank = 0;
+        OSTNode<T> y = root;
+        while (y != x) {
+            if (x.data.compareTo(y.data) < 0)
+                y = y.left;
+            else {
+                rank += (y.left.size + 1);
+                y = y.right;
+            }
+        }
+        return rank;
+    }
+
+    public void printTreeToFile() {
+        final int height = (int)Math.ceil(Math.log(root.size)/Math.log(2)) + 2;
+        final int width = 16 * (int)Math.pow(2, Math.ceil(Math.log(root.size)/Math.log(2))) + 10;
+        int len = width * height * 2 + 2;
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 1; i <= len; i++)
+            sb.append(i < len - 2 && i % width == 0 ? "\n" : ' ');
+
+        printTreeToFileR(sb, width / 2, 1, width / 4, width, root, " ");
+        try {
+            Files.delete(Paths.get("tree.txt"));
+        } catch (IOException e) {
+            System.out.println("Created a file <<tree.txt>> in the working directory");
+        }
+        try {
+            Writer writer = Files.newBufferedWriter(Paths.get("tree.txt"));
+            writer.write(sb.toString());
+            writer.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void printTreeToFileR(StringBuilder sb, int c, int r, int d, int w, OSTNode<T> n,
+                          String edge) {
+        if (n != null) {
+            printTreeToFileR(sb, c - d, r + 2, d / 2, w, n.left, " /");
+
+            String s = n.label();
+            int idx1 = r * w + c - (s.length() + 1) / 2;
+            int idx2 = idx1 + s.length();
+            int idx3 = idx1 - w;
+            if (idx2 < sb.length())
+                sb.replace(idx1, idx2, s).replace(idx3, idx3 + 2, edge);
+
+            printTreeToFileR(sb, c + d, r + 2, d / 2, w, n.right, "\\ ");
+        }
+    }
 
     private boolean insert(OSTNode<T> nnd, OSTNode<T> t, OSTNode<T> par) {
         // return true iff t is red and t has a red child
@@ -105,6 +165,7 @@ public class OrderStatisticTree<T extends Comparable<T>> {
         if (nnd.data.compareTo(t.data) < 0) {
             if (t.left.isEmpty()) {
                 t.left = nnd; //attach new node as leaf
+                t.size++;
             } else if (insert(nnd, t.left, t)) {
                 // red-red violation exists at t.left and its children
                 if (t.right.isRed) { // red uncle case:
@@ -130,6 +191,7 @@ public class OrderStatisticTree<T extends Comparable<T>> {
         } else { // branch right
             if (t.right.isEmpty()) {
                 t.right = nnd; // attach new node as leaf
+                t.size++;
             } else if (insert(nnd, t.right, t)) {
                 // red-red violation exists at t.right and its children
                 if (t.left.isRed) { // red uncle case:
@@ -155,6 +217,7 @@ public class OrderStatisticTree<T extends Comparable<T>> {
     } // end insert
     
     private boolean remove(T x, OSTNode<T> t, OSTNode<T> par, OSTNode<T> gpar) {
+        par.size--;
         if (t.isEmpty()) return false;
         if (x.compareTo(t.data) < 0) {
             if (remove(x, t.left, t, par)) {
@@ -289,5 +352,15 @@ public class OrderStatisticTree<T extends Comparable<T>> {
             }
         }
         return false;
+    }
+
+    private T osSelect(OSTNode<T> x, int i) {
+        int r = x.left.size + 1;
+        if (i == r)
+            return x.data;
+        else if (i < r)
+            return osSelect(x.left, i);
+        else
+            return osSelect(x.right, i-r);
     }
 }
