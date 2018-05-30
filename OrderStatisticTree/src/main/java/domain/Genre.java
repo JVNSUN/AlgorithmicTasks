@@ -2,7 +2,6 @@ package domain;
 
 import OrderStatisticTree.OrderStatisticTree;
 import OrderStatisticTree.OSTNode;
-import java.util.LinkedList;
 
 public class Genre {
     private String name;
